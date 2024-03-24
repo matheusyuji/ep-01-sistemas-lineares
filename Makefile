@@ -1,6 +1,6 @@
 # PROGRAMA
     PROG = perfSL
-    OBJS = main.o data.o
+    OBJS = main.o data.o metodos_numericos.o
 # utils.o
 
 # Compilador
