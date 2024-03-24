@@ -12,7 +12,7 @@ void retrossubs (double** A, double* b, double* x, unsigned int size) {
 unsigned int encontra_max (double** A, int i, unsigned int size) {
     unsigned int iPivo = i;
     for (int j = i; j < size; j++) {
-        if (A[j][i] > A[iPivo][i])
+        if (fabs (A[j][i]) > fabs(A[iPivo][i]))
             iPivo = j;
     }
     return iPivo;
@@ -39,11 +39,14 @@ void eliminacao_gauss (double** A, double* b, unsigned int size) {
             troca_linha (A, b, i, iPivo, size);
 
         for (int k = i + 1; k < size; ++k) {
-            double m = A[k][i] / A[i][i];
-            A[k][i] = 0.0;
+            //double m = A[k][i] / A[i][i];
+            //A[k][i] = 0.0;
             for (int j = i + 1; j < size; ++j)
-                A[k][j] -= A[i][j] * m;
-            b[k] -= b[i] * m;
+                A[k][j] = A[k][j]*A[i][i] - A[i][j] * A[k][i];
+                //A[k][j] -= A[i][j] * m;
+            b[k] = b[k]*A[i][i] - b[i]*A[k][i];
+            //b[k] -= b[i] * m;
+            A[k][i] = 0.0;
         }
     }
 }
