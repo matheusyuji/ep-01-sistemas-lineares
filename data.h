@@ -12,5 +12,6 @@ double** get_matriz (unsigned int size);
 void free_matriz (double** matriz, unsigned int size);
 void print_matriz (double** matriz, unsigned int size);
 void read_sistema_linear (double** A, double* b, unsigned int size);
+void vetor_triangular (double** A, double* a, double* c, double* d, unsigned int size);
 
 #endif

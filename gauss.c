@@ -1,4 +1,4 @@
-#include "metodos_numericos.h"
+#include "gauss.h"
 
 void retrossubs (double** A, double* b, double* x, unsigned int size) {
     for (int i = size - 1; i >= 0; --i) {
@@ -9,6 +9,7 @@ void retrossubs (double** A, double* b, double* x, unsigned int size) {
     }
 }
 
+// encontra o maior valor da coluna i
 unsigned int encontra_max (double** A, int i, unsigned int size) {
     unsigned int iPivo = i;
     for (int j = i; j < size; j++) {
@@ -18,7 +19,10 @@ unsigned int encontra_max (double** A, int i, unsigned int size) {
     return iPivo;
 }
 
-void troca_linha (double** A, double* b, int i, unsigned int iPivo, unsigned int size) {
+// troca a linha i pela iPivo da matriz A
+void troca_linha (double** A, double* b, int i, 
+                unsigned int iPivo, unsigned int size) 
+{
     double aux;
     for (int j = 0; j < size; j++) {
         aux = A[i][j];
@@ -49,4 +53,20 @@ void eliminacao_gauss (double** A, double* b, unsigned int size) {
             A[k][i] = 0.0;
         }
     }
+}
+
+void eliminacao_gauss_tridiagonal (double *d, double *a,
+                                double *c, double *b, double *x, 
+                                unsigned int size) 
+{
+    for (int i = 0; i < size-1; ++i) {
+        double m = a[i]/d[i];
+        a[i] = 0.0;
+        d[i+1] -= c[i]*m;
+        b[i+1] -= b[i]*m;
+    }
+
+    x[size-1] = b[size-1]/d[size-1];
+    for (int i = size-2; i>=0; --i)
+        x[i] = (b[i] - c[i]*x[i+1])/d[i];
 }
