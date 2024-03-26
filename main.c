@@ -1,20 +1,26 @@
 #include "data.h"
 #include "gauss.h"
 #include "utils.h"
+#include "gauss_seidel.h"
 
 int main () {
     double **A;
     double *b, *a, *c, *d, *x;
+    int cont = 0;
 
     unsigned int size = get_size();
     A = get_matriz(size);
     b = get_vetor(size);
-    a = get_vetor(size-1);
-    c = get_vetor(size-1);
-    d = get_vetor(size);
+    //a = get_vetor(size-1);
+    //c = get_vetor(size-1);
+    //d = get_vetor(size);
     x = get_vetor(size);
+    x = zera_vetor (x, size);
+   
 
     read_sistema_linear(A, b, size);
+    //print_vetor (x, size);
+    cont = gauss_seidel (A, b, x, size, TOL);
 
     //print_vetor(b, size);
     //print_matriz(A, size);
@@ -29,8 +35,8 @@ int main () {
 
     //eliminacao_gauss (A, b, size);
     //retrossubs(A, b, x, size);
-    vetor_triangular(A, a, c, d, size);
-    eliminacao_gauss_tridiagonal(d, a, c, b, x, size);
+    //vetor_triangular(A, a, c, d, size);
+    //eliminacao_gauss_tridiagonal(d, a, c, b, x, size);
     //print_vetor(d, size);
     //print_vetor(a, size-1);
     //print_vetor(c, size-1);
@@ -38,11 +44,14 @@ int main () {
 
     printf("\n");
     print_vetor(x, size);
+    printf ("\n");
+    printf ("%d", cont);
 
     free_matriz(A, size);
     free_vetor(b);
-    free_vetor(a);
-    free_vetor(c);
-    free_vetor(d);
+
+    //free_vetor(a);
+    //free_vetor(c);
+    //free_vetor(d);
     //free_vetor(x);
 }

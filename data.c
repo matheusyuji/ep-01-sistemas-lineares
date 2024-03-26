@@ -13,6 +13,12 @@ double* get_vetor (unsigned int size) {
     return vetor;
 }
 
+double* zera_vetor (double* vetor, unsigned int size) {
+    for (int i = 0; i < size; i++) 
+        vetor[i] = 0.0;
+    return vetor;
+}
+
 // libera o espaço alocado para o vetor
 void free_vetor (double* vetor) {
     free (vetor);

@@ -1,6 +1,6 @@
 # PROGRAMA
     PROG = perfSL
-    OBJS = main.o data.o gauss.o utils.o
+    OBJS = main.o data.o gauss.o gauss_seidel.o utils.o 
 # utils.o
 
 # Compilador
