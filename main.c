@@ -11,16 +11,19 @@ int main () {
     unsigned int size = get_size();
     A = get_matriz(size);
     b = get_vetor(size);
-    //a = get_vetor(size-1);
-    //c = get_vetor(size-1);
-    //d = get_vetor(size);
+    a = get_vetor(size-1);
+    c = get_vetor(size-1);
+    d = get_vetor(size);
+
     x = get_vetor(size);
     x = zera_vetor (x, size);
    
 
     read_sistema_linear(A, b, size);
+    vetor_triangular(A, a, c, d, size);
+    cont = gauss_seidel_tridiagonal (d, a, c, b, x, size);
     //print_vetor (x, size);
-    cont = gauss_seidel (A, b, x, size);
+    //cont = gauss_seidel(A, b, x, size);
 
     //print_vetor(b, size);
     //print_matriz(A, size);
@@ -50,8 +53,8 @@ int main () {
     free_matriz(A, size);
     free_vetor(b);
 
-    //free_vetor(a);
-    //free_vetor(c);
-    //free_vetor(d);
-    //free_vetor(x);
+    free_vetor(a);
+    free_vetor(c);
+    free_vetor(d);
+    free_vetor(x);
 }

@@ -16,4 +16,7 @@
 int gauss_seidel (double** A, double* b, double*x,
                   unsigned int size);
 
+int gauss_seidel_tridiagonal (double *d, double *a, double *c, 
+                              double *b, double *x, unsigned int size);
+                              
 #endif

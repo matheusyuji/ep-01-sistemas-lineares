@@ -68,5 +68,5 @@ void eliminacao_gauss_tridiagonal (double *d, double *a,
 
     x[size-1] = b[size-1]/d[size-1];
     for (int i = size-2; i>=0; --i)
-        x[i] = (b[i] - c[i]*x[i+1])/d[i];
+        x[i] = (b[i] - c[i] * x[i+1])/d[i];
 }
