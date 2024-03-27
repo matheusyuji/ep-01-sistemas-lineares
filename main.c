@@ -20,7 +20,7 @@ int main () {
 
     read_sistema_linear(A, b, size);
     //print_vetor (x, size);
-    cont = gauss_seidel (A, b, x, size, TOL);
+    cont = gauss_seidel (A, b, x, size);
 
     //print_vetor(b, size);
     //print_matriz(A, size);

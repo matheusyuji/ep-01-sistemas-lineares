@@ -73,7 +73,7 @@ void read_sistema_linear (double** A, double* b, unsigned int size) {
 
 // transforma a matriz triangular em tres vetores a, c e d
 void vetor_triangular (double** A, double* a, double* c, 
-                    double* d, unsigned int size) 
+                        double* d, unsigned int size) 
 {
     for (int i = 0; i < size-1; i++) {
         d[i] = A[i][i];

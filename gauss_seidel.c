@@ -11,20 +11,25 @@ double norma_maxima (double* x, double* xa, unsigned int size) {
 }
 
 int gauss_seidel (double** A, double* b, double*x,
-                  unsigned int size, double tol)
+                  unsigned int size)
 {
-    double erro = 1.0 + tol;
-    int j, s, cont = 0;
+    double erro = 1.0 + EPSILON;
+    int j , cont = 0;
     double *xa = get_vetor(size); 
    
-    while ((erro > tol) && (cont < MAXIT)) {
+    while ((erro > EPSILON) && (cont < MAXIT)) {
         cont = cont + 1;
         memcpy (xa, x, size * sizeof(double));
        
         for (int i = 0; i < size; ++i) {
-            for (s=0, j=0; j < size; ++j)
-                if (i != j) s+= A[i][j]*x[j];
-        x[i] = (b[i] - s)/A[i][i];
+            double sum = 0.0;
+            for (j=0; j < size; ++j) {
+                if (i != j) {
+                    sum+= A[i][j]*x[j];
+                }
+            }
+              
+        x[i] = (b[i] - sum)/A[i][i];
         }
         erro = norma_maxima(x, xa, size);
     }
