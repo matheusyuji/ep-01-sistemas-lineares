@@ -34,7 +34,7 @@ int gauss_seidel (double** A, double* b, double*x,
         erro = norma_maxima(x, xa, size);
     }
 
-    free_vetor(xa);
+    free(xa);
     return cont;
 }
 
@@ -58,6 +58,6 @@ int gauss_seidel_tridiagonal (double *d, double *a, double *c,
         erro = norma_maxima(x, xa, size);
     }
     
-    free_vetor(xa);
+    free(xa);
     return cont;
 }

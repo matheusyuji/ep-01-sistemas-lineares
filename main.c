@@ -63,10 +63,12 @@ int main () {
     free_vetor(x);*/
   
     unsigned int size;
-    while (!feof(stdin)) {
-        scanf ("%d", &size);
+    //while (!feof(stdin)) {
+    while ((scanf ("%d", &size) == 1)) {
+        //scanf ("%d", &size);
         double** A = get_matriz(size);
         double* b = get_vetor(size);
+        int cont = 0;
 
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size+1; j++) {
@@ -77,24 +79,40 @@ int main () {
         }
 
         
-        print_matriz (A, size);
-        print_vetor (b, size);
-        printf("\n");
+        //print_matriz (A, size);
+        //print_vetor (b, size);
+        //printf("\n");
 
 
         double* x = get_vetor(size);
+        
         double time = timestamp();
         eliminacao_gauss (A, b, size);
         retrossubs(A, b, x, size);
         time = timestamp () - time;
 
-        print_vetor(x, size);
+        double* r = get_vetor(size);
+        residuo(A, b, x, r, size);
+
         printf ("%lf\n", time);
+        print_vetor(x, size);
+        print_vetor(r, size);
         printf("\n");
 
+        /*memset(x, 0, sizeof(x));
+        double time = timestamp();
+        cont = gauss_seidel(A, b, x, size);
+        time = timestamp () - time;
+
+        print_vetor(x, size);
+        printf ("%lf\n", time);
+        printf ("%d\n", cont);
+        printf("\n");*/
+
         free_matriz(A, size);
-        free_vetor(b);
-        free_vetor(x);
-        size = 0;
+        free(b);
+        free(x);
+        free(r);
+        
     }
 }

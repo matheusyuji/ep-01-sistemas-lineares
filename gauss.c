@@ -1,4 +1,6 @@
+#include "data.h"
 #include "gauss.h"
+
 
 void retrossubs (double** A, double* b, double* x, unsigned int size) {
     for (int i = size - 1; i >= 0; --i) {
@@ -34,6 +36,27 @@ void troca_linha (double** A, double* b, int i,
     b[iPivo] = aux;
 
     return;
+}
+
+void mult_matriz (double** A, double* x, double* Ax, unsigned int size) {
+    for (int i = 0; i < size; i++) {
+        Ax[i] = 0.0;
+        for (int j = 0; j < size; j++) {
+            Ax[i] += A[i][j]*x[j];
+        }
+    }
+}
+
+void residuo (double** A, double* b, double* x, double* r, unsigned int size) {
+    double* Ax = get_vetor(size);
+
+    mult_matriz(A, x, Ax, size);
+    
+    for (int i = 0; i < size; i++) {
+        r[i] = Ax[i] - b[i];
+    }
+
+    free(Ax);
 }
 
 void eliminacao_gauss (double** A, double* b, unsigned int size) {
