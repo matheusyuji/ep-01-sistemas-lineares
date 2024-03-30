@@ -48,24 +48,9 @@ int main () {
     //print_vetor(a, size-1);
     //print_vetor(c, size-1);
 
-    /*
-    printf("\n");
-    print_vetor(x, size);
-    printf ("\n");
-    printf ("%d", cont);
-
-    free_matriz(A, size);
-    free_vetor(b);
-
-    free_vetor(a);
-    free_vetor(c);
-    free_vetor(d);
-    free_vetor(x);*/
   
     unsigned int size;
-    //while (!feof(stdin)) {
     while ((scanf ("%d", &size) == 1)) {
-        //scanf ("%d", &size);
         double** A = get_matriz(size);
         double* b = get_vetor(size);
         int cont = 0;
@@ -78,12 +63,6 @@ int main () {
                     scanf ("%lf", &A[i][j]);
         }
 
-        
-        //print_matriz (A, size);
-        //print_vetor (b, size);
-        //printf("\n");
-
-
         double* x = get_vetor(size);
         
         double time = timestamp();
@@ -93,11 +72,15 @@ int main () {
 
         double* r = get_vetor(size);
         residuo(A, b, x, r, size);
+        
+        print_result (x, r, time, cont, "EG", size);
 
-        printf ("%lf\n", time);
-        print_vetor(x, size);
-        print_vetor(r, size);
-        printf("\n");
+        /*
+        time = timestamp();
+        int cont = gauss_seidel(A, b, x, size);
+        time = timestamp() - time;*/
+
+        // copia A, copia b, x zera
 
         /*memset(x, 0, sizeof(x));
         double time = timestamp();

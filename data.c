@@ -53,6 +53,24 @@ void print_matriz (double** matriz, unsigned int size) {
     return;
 }
 
+void print_result (double* x, double* r, double time, int cont, 
+                    char nome[], unsigned int size)
+{
+    if (strcmp(nome,"EG") == 0)
+        printf("EG clássico:\n");
+    else if (strcmp (nome, "GS") == 0)
+        printf("GS clássico [%d iterações]\n", cont);
+    else if (strcmp (nome, "EG3") == 0)
+        printf ("EG 3-diagonal:\n");
+    else
+        printf ("GS 3-diagonal [%d iterações]\n", cont);
+    
+    printf ("%lf ms\n", time);
+    print_vetor (x, size);
+    print_vetor (r, size);
+    printf("\n");
+}
+
 // gera a matriz de coeficientes e vetor das constantes
 void read_sistema_linear (double** A, double* b, unsigned int size) {
     for (int i = 0; i < size; i++)

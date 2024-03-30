@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 unsigned int get_size();
 
@@ -17,6 +18,9 @@ double** get_matriz (unsigned int size);
 void free_matriz (double** matriz, unsigned int size);
 
 void print_matriz (double** matriz, unsigned int size);
+
+void print_result (double* x, double* r, double time, int cont, 
+                    char nome[], unsigned int size);
 
 void read_sistema_linear (double** A, double* b, unsigned int size);
 
