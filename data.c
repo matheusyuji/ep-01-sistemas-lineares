@@ -1,21 +1,7 @@
 #include "data.h"
-
-// retorna o tamanho da matriz
-unsigned int get_size () {
-    unsigned int size;
-    scanf ("%d", &size);
-    return size;
-}
-
 // aloca um vetor de tamanho = size
 double* get_vetor (unsigned int size) {
     double *vetor = (double *)malloc(size * sizeof(double));
-    return vetor;
-}
-
-double* zera_vetor (double* vetor, unsigned int size) {
-    for (int i = 0; i < size; i++) 
-        vetor[i] = 0.0;
     return vetor;
 }
 
@@ -53,16 +39,19 @@ void print_matriz (double** matriz, unsigned int size) {
     return;
 }
 
+// printa a saída
 void print_result (double* x, double* r, double time, int cont, 
                     char nome[], unsigned int size)
 {
-    if (strcmp(nome,"EG") == 0)
+    if (strcmp(nome,"EG") == 0) {
+        printf("----------------------------------------------\n");
         printf("EG clássico:\n");
+    }
     else if (strcmp (nome, "GS") == 0)
         printf("GS clássico [%d iterações]\n", cont);
     else if (strcmp (nome, "EG3") == 0)
         printf ("EG 3-diagonal:\n");
-    else
+    else 
         printf ("GS 3-diagonal [%d iterações]\n", cont);
     
     printf ("%lf ms\n", time);
@@ -71,16 +60,11 @@ void print_result (double* x, double* r, double time, int cont,
     printf("\n");
 }
 
-// gera a matriz de coeficientes e vetor das constantes
-void read_sistema_linear (double** A, double* b, unsigned int size) {
-    for (int i = 0; i < size; i++)
-        for (int j = 0; j < size+1; j++) {
-            if (j == size)
-                scanf ("%lf", &b[i]);
-            else
-                scanf ("%lf", &A[i][j]);
-        }
-    return;
+// copia uma matriz
+void copy_matriz (double** ACopy, double** A, unsigned int size) {
+    for (int i = 0; i < size; i++) {
+        memcpy(ACopy[i], A[i], size*sizeof(double));
+    }
 }
 
 // transforma a matriz triangular em tres vetores a, c e d

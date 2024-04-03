@@ -4,51 +4,6 @@
 #include "gauss_seidel.h"
 
 int main () {
-    /*double **A;
-    double *b, *a, *c, *d, *x;
-    int cont = 0;
-
-    unsigned int size = get_size();
-    A = get_matriz(size);
-    b = get_vetor(size);
-    a = get_vetor(size-1);
-    c = get_vetor(size-1);
-    d = get_vetor(size);
-
-    x = get_vetor(size);
-    x = zera_vetor (x, size);
-
-    read_sistema_linear(A, b, size);
-    vetor_triangular(A, a, c, d, size);
-    double time = timestamp ();
-    cont = gauss_seidel_tridiagonal (d, a, c, b, x, size);
-    time = timestamp () - time;
-    printf ("%lf\n", time);*/
-
-
-    //print_vetor (x, size);
-    //cont = gauss_seidel(A, b, x, size);
-
-    //print_vetor(b, size);
-    //print_matriz(A, size);
-    /*
-    unsigned int i = encontra_max (A, 0, size);
-    printf("%d\n", i);
-    i = encontra_max (A, 1, size);
-    printf("%d\n", i);
-    i = encontra_max (A, 2, size);
-    printf("%d\n", i);
-    */
-
-    //eliminacao_gauss (A, b, size);
-    //retrossubs(A, b, x, size);
-    //vetor_triangular(A, a, c, d, size);
-    //eliminacao_gauss_tridiagonal(d, a, c, b, x, size);
-    //print_vetor(d, size);
-    //print_vetor(a, size-1);
-    //print_vetor(c, size-1);
-
-  
     unsigned int size;
     while ((scanf ("%d", &size) == 1)) {
         double** A = get_matriz(size);
@@ -63,39 +18,89 @@ int main () {
                     scanf ("%lf", &A[i][j]);
         }
 
+        // Eliminaçao de Gauss
+        double** ACopy = get_matriz(size);
+        double* bCopy = get_vetor(size);
         double* x = get_vetor(size);
-        
+
+        copy_matriz(ACopy, A, size);
+        memcpy(bCopy, b, size*sizeof(double));
+     
         double time = timestamp();
-        eliminacao_gauss (A, b, size);
-        retrossubs(A, b, x, size);
+        eliminacao_gauss (ACopy, bCopy, size);
+        retrossubs(ACopy, bCopy, x, size);
         time = timestamp () - time;
 
         double* r = get_vetor(size);
-        residuo(A, b, x, r, size);
+        residuo(ACopy, bCopy, x, r, size);
         
         print_result (x, r, time, cont, "EG", size);
 
-        /*
+        // Gauss Seidel
+        copy_matriz(ACopy, A, size);
+        memcpy(bCopy, b, size*sizeof(double));
+        memset(x, 0, size*sizeof(*x));
+        memset(r, 0, size*sizeof(*r));
+
         time = timestamp();
-        int cont = gauss_seidel(A, b, x, size);
-        time = timestamp() - time;*/
-
-        // copia A, copia b, x zera
-
-        /*memset(x, 0, sizeof(x));
-        double time = timestamp();
         cont = gauss_seidel(A, b, x, size);
+        time = timestamp() - time;
+        residuo(ACopy, bCopy, x, r, size);
+
+        print_result (x, r, time, cont, "GS", size);
+
+        free_matriz(ACopy, size);
+
+        // EG Tridiagonal
+        double* a = get_vetor(size-1);
+        double* c = get_vetor(size-1);
+        double* d = get_vetor(size);
+
+        vetor_triangular(A, a, c, d, size);
+        free_matriz(A, size);
+
+        double* aCopy = get_vetor(size-1);
+        double* cCopy = get_vetor(size-1);
+        double* dCopy = get_vetor(size);
+        memset(x, 0, size*sizeof(*x));
+        memset(r, 0, size*sizeof(*r));
+
+        memcpy(aCopy, a, (size-1)*sizeof(double));
+        memcpy(bCopy, b, size*sizeof(double));
+        memcpy(cCopy, c, (size-1)*sizeof(double));
+        memcpy(dCopy, d, size*sizeof(double));
+
+        time = timestamp();
+        eliminacao_gauss_tridiagonal (dCopy, aCopy, cCopy, bCopy, x, size);
+        time = timestamp() - time;
+    
+
+        print_result(x, r, time, cont, "EG3", size);
+        
+        // GS Tridiagonal
+        cont = 0;
+        memset(x, 0, size*sizeof(*x));
+        memset(r, 0, size*sizeof(*r));
+        memcpy(aCopy, a, (size-1)*sizeof(double));
+        memcpy(bCopy, b, size*sizeof(double));
+        memcpy(cCopy, c, (size-1)*sizeof(double));
+        memcpy(dCopy, d, size*sizeof(double));
+
+        time = timestamp ();
+        cont = gauss_seidel_tridiagonal (d, a, c, b, x, size);
         time = timestamp () - time;
 
-        print_vetor(x, size);
-        printf ("%lf\n", time);
-        printf ("%d\n", cont);
-        printf("\n");*/
+        print_result(x, r, time, cont, "GS3", size);
 
-        free_matriz(A, size);
+        free(a);
+        free(aCopy);
         free(b);
+        free(bCopy);
+        free(c);
+        free(cCopy);
+        free(d);
+        free(dCopy);
         free(x);
-        free(r);
-        
+        free(r);   
     }
 }
