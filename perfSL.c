@@ -1,22 +1,16 @@
-#include "data.h"
+#include "sistLin.h"
 #include "gauss.h"
 #include "utils.h"
-#include "gauss_seidel.h"
+#include "gaussSeidel.h"
 
 int main () {
     unsigned int size;
     while ((scanf ("%d", &size) == 1)) {
         double** A = get_matriz(size);
         double* b = get_vetor(size);
-        int cont = 0;
+        int it = 0;
 
-        for (int i = 0; i < size; i++)
-            for (int j = 0; j < size+1; j++) {
-                if (j == size)
-                    scanf ("%lf", &b[i]);
-                else
-                    scanf ("%lf", &A[i][j]);
-        }
+        read_sistema_linear(A, b, size);
 
         // Eliminaçao de Gauss
         double** ACopy = get_matriz(size);
@@ -32,9 +26,11 @@ int main () {
         time = timestamp () - time;
 
         double* r = get_vetor(size);
+        copy_matriz(ACopy, A, size);
+        memcpy(bCopy, b, size*sizeof(double));
         residuo(ACopy, bCopy, x, r, size);
         
-        print_result (x, r, time, cont, "EG", size);
+        print_result (x, r, time, it, "EG", size);
 
         // Gauss Seidel
         copy_matriz(ACopy, A, size);
@@ -43,11 +39,14 @@ int main () {
         memset(r, 0, size*sizeof(*r));
 
         time = timestamp();
-        cont = gauss_seidel(A, b, x, size);
+        it = gauss_seidel(A, b, x, size);
         time = timestamp() - time;
+
+        copy_matriz(ACopy, A, size);
+        memcpy(bCopy, b, size*sizeof(double));
         residuo(ACopy, bCopy, x, r, size);
 
-        print_result (x, r, time, cont, "GS", size);
+        print_result (x, r, time, it, "GS", size);
 
         free_matriz(ACopy, size);
 
@@ -73,12 +72,18 @@ int main () {
         time = timestamp();
         eliminacao_gauss_tridiagonal (dCopy, aCopy, cCopy, bCopy, x, size);
         time = timestamp() - time;
-    
 
-        print_result(x, r, time, cont, "EG3", size);
+        memcpy(aCopy, a, (size-1)*sizeof(double));
+        memcpy(bCopy, b, size*sizeof(double));
+        memcpy(cCopy, c, (size-1)*sizeof(double));
+        memcpy(dCopy, d, size*sizeof(double));
+    
+        residuo_tridiagonal(aCopy, dCopy, cCopy, bCopy, x, r, size);
+        
+        print_result(x, r, time, it, "EG3", size);
         
         // GS Tridiagonal
-        cont = 0;
+        it = 0;
         memset(x, 0, size*sizeof(*x));
         memset(r, 0, size*sizeof(*r));
         memcpy(aCopy, a, (size-1)*sizeof(double));
@@ -87,10 +92,17 @@ int main () {
         memcpy(dCopy, d, size*sizeof(double));
 
         time = timestamp ();
-        cont = gauss_seidel_tridiagonal (d, a, c, b, x, size);
+        it = gauss_seidel_tridiagonal (d, a, c, b, x, size);
         time = timestamp () - time;
 
-        print_result(x, r, time, cont, "GS3", size);
+        memcpy(aCopy, a, (size-1)*sizeof(double));
+        memcpy(bCopy, b, size*sizeof(double));
+        memcpy(cCopy, c, (size-1)*sizeof(double));
+        memcpy(dCopy, d, size*sizeof(double));
+  
+        residuo_tridiagonal(aCopy, dCopy, cCopy, bCopy, x, r, size);
+
+        print_result(x, r, time, it, "GS3", size);
 
         free(a);
         free(aCopy);

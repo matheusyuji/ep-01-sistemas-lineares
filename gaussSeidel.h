@@ -18,5 +18,7 @@ int gauss_seidel (double** A, double* b, double*x,
 
 int gauss_seidel_tridiagonal (double *d, double *a, double *c, 
                               double *b, double *x, unsigned int size);
-                              
+
+void residuo_tridiagonal(double *a, double *d, double *c, double *b,
+                            double *x, double *r, unsigned int size) ;
 #endif

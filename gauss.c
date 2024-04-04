@@ -1,5 +1,5 @@
-#include "data.h"
 #include "gauss.h"
+#include "sistLin.h"
 
 
 void retrossubs (double** A, double* b, double* x, unsigned int size) {
@@ -38,6 +38,7 @@ void troca_linha (double** A, double* b, int i,
     return;
 }
 
+// Calcula o AX do residuo
 void mult_matriz (double** A, double* x, double* Ax, unsigned int size) {
     for (int i = 0; i < size; i++) {
         Ax[i] = 0.0;
@@ -47,6 +48,7 @@ void mult_matriz (double** A, double* x, double* Ax, unsigned int size) {
     }
 }
 
+// Calcula o residuo R = AX - B
 void residuo (double** A, double* b, double* x, double* r, unsigned int size) {
     double* Ax = get_vetor(size);
 

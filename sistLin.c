@@ -1,4 +1,4 @@
-#include "data.h"
+#include "sistLin.h"
 // aloca um vetor de tamanho = size
 double* get_vetor (unsigned int size) {
     double *vetor = (double *)malloc(size * sizeof(double));
@@ -8,7 +8,7 @@ double* get_vetor (unsigned int size) {
 // imprime o vetor
 void print_vetor (double* vetor, unsigned int size) {
     for (int i = 0; i < size; i++)
-        printf("%lf ", vetor[i]);
+        printf("%.12lf ", vetor[i]);
     printf ("\n");
     return;
 }
@@ -40,7 +40,7 @@ void print_matriz (double** matriz, unsigned int size) {
 }
 
 // printa a saída
-void print_result (double* x, double* r, double time, int cont, 
+void print_result (double* x, double* r, double time, int it, 
                     char nome[], unsigned int size)
 {
     if (strcmp(nome,"EG") == 0) {
@@ -48,13 +48,13 @@ void print_result (double* x, double* r, double time, int cont,
         printf("EG clássico:\n");
     }
     else if (strcmp (nome, "GS") == 0)
-        printf("GS clássico [%d iterações]\n", cont);
+        printf("GS clássico [%d iterações]\n", it);
     else if (strcmp (nome, "EG3") == 0)
         printf ("EG 3-diagonal:\n");
     else 
-        printf ("GS 3-diagonal [%d iterações]\n", cont);
+        printf ("GS 3-diagonal [%d iterações]\n", it);
     
-    printf ("%lf ms\n", time);
+    printf ("%.8lf ms\n", time);
     print_vetor (x, size);
     print_vetor (r, size);
     printf("\n");
@@ -66,6 +66,18 @@ void copy_matriz (double** ACopy, double** A, unsigned int size) {
         memcpy(ACopy[i], A[i], size*sizeof(double));
     }
 }
+
+// gera a matriz de coeficientes e vetor das constantes
+void read_sistema_linear (double** A, double* b, unsigned int size) {
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size+1; j++) {
+            if (j == size)
+                scanf ("%lf", &b[i]);
+            else
+                scanf ("%lf", &A[i][j]);
+        }
+    return;
+}   
 
 // transforma a matriz triangular em tres vetores a, c e d
 void vetor_triangular (double** A, double* a, double* c, 
