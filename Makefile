@@ -4,11 +4,11 @@
 # utils.o
 
 # Compilador
-    CC     = gcc
+    CC = gcc
 
 # Acrescentar onde apropriado as opções para incluir uso da biblioteca LIKWID
-    CFLAGS = -O0
-    LFLAGS = -lm
+    CFLAGS = -O0 -I${LIKWID_INCLUDE} -DLIKWID_PERFMON
+    LFLAGS = -lm -L${LIKWID_LIB} -llikwid
 
 # Lista de arquivos para distribuição
 DISTFILES = *.c *.h README* Makefile

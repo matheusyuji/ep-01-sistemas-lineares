@@ -84,6 +84,7 @@ void vetor_triangular (double** A, double* a, double* c,
     return;
 }
 
+// Faz a cópia dos vetores triangulares
 void copy_triangular (double* d, double* dCopy, double* a, double* aCopy,
                         double* c, double* cCopy, unsigned int size)
 {

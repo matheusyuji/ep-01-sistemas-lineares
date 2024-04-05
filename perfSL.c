@@ -2,10 +2,11 @@
 #include "gauss.h"
 #include "utils.h"
 #include "gaussSeidel.h"
+#include "likwid.h"
 
 int main () {
     unsigned int size;
-    while ((scanf ("%d", &size) == 1)) {
+    while ((scanf ("%d", &size) == 1)){
         
         // Cria cópia de vetores
         double** ACopy = get_matriz(size);
@@ -22,12 +23,17 @@ int main () {
         // Copia o sistema linear para A e b
         copy_matriz(A, ACopy, size);
         memcpy(b, bCopy, size*sizeof(double));
+
+	    LIKWID_MARKER_INIT;
      
         // Eliminação de Gauss
+        LIKWID_MARKER_START("EG");
         double time = timestamp();
         eliminacao_gauss (A, b, size);
         retrossubs(A, b, x, size);
         time = timestamp () - time;
+        LIKWID_MARKER_STOP("EG");
+
 
         double* r = get_vetor(size);
         // Faz uma cópia do sistema linear para calcular resíduo
@@ -44,9 +50,11 @@ int main () {
         memset(r, 0, size*sizeof(*r));
 
         // Gauss Seidel
+        LIKWID_MARKER_START("GS");
         time = timestamp();
         it = gauss_seidel(A, b, x, size);
         time = timestamp() - time;
+        LIKWID_MARKER_STOP("GS");
 
         copy_matriz(A, ACopy, size);
           
@@ -77,9 +85,11 @@ int main () {
         
 
         // Eliminação de Gauss Tridiagonal
+        LIKWID_MARKER_START("EG3");
         time = timestamp();
         eliminacao_gauss_tridiagonal (d, a, c, b, x, size);
         time = timestamp() - time;
+        LIKWID_MARKER_STOP("EG3");
 
         copy_triangular(d, dCopy, a, aCopy, c, cCopy, size);
         memcpy(b, bCopy, size*sizeof(double));
@@ -97,9 +107,13 @@ int main () {
         copy_triangular(d, dCopy, a, aCopy, c, cCopy, size);
        
         // Gauss Seidel Tridiagonal
+        LIKWID_MARKER_START("GS3");
         time = timestamp ();
         it = gauss_seidel_tridiagonal (d, a, c, b, x, size);
         time = timestamp () - time;
+        LIKWID_MARKER_STOP("GS3");
+
+	    LIKWID_MARKER_CLOSE;
 
         memcpy(b, bCopy, size*sizeof(double));
         copy_triangular(d, dCopy, a, aCopy, c, cCopy, size);
