@@ -13,16 +13,17 @@ double** get_matriz (unsigned int size);
 
 void free_matriz (double** matriz, unsigned int size);
 
-void print_matriz (double** matriz, unsigned int size);
-
 void print_result (double* x, double* r, double time, int it, 
                     char nome[], unsigned int size);
 
-void copy_matriz (double** ACopy, double** A, unsigned int size);
+void copy_matriz (double** A, double** ACopy, unsigned int size);
 
 void read_sistema_linear (double** A, double* b, unsigned int size);
 
 void vetor_triangular (double** A, double* a, double* c, 
                         double* d, unsigned int size); 
+
+void copy_triangular (double* d, double* dCopy, double* a, double* aCopy,
+                        double* c, double* cCopy, unsigned int size);
 
 #endif
