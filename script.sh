@@ -11,7 +11,7 @@ ARQUIVO="$1"
 
 echo "performance" > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor
 
-./perfSL < "$ARQUIVO" | grep -v 'Running'
+./perfSL < "$ARQUIVO"
 
 for k in $METRICA
 do

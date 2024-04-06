@@ -1,3 +1,4 @@
+// Matheus Yuji GRR20205104
 #include "gauss.h"
 #include "sistLin.h"
 

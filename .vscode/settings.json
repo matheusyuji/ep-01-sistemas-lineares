@@ -1,6 +1,7 @@
 {
   "C_Cpp.errorSquiggles": "disabled",
   "files.associations": {
-    "sistlin.h": "c"
+    "sistlin.h": "c",
+    "gaussseidel.h": "c"
   }
 }

@@ -1,3 +1,4 @@
+// Matheus Yuji GRR20205104
 #include "gaussSeidel.h"
 #include "sistLin.h"
 

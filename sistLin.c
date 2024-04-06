@@ -1,3 +1,4 @@
+// Matheus Yuji GRR20205104
 #include "sistLin.h"
 
 // Aloca um vetor de tamanho = size
@@ -35,7 +36,7 @@ void print_result (double* x, double* r, double time, int it,
                     char nome[], unsigned int size)
 {
     if (strcmp(nome,"EG") == 0) {
-        printf("----------------------------------------------\n");
+        printf("--------------------------------------------------------------------------------\n");
         printf("EG clássico:\n");
     }
     else if (strcmp (nome, "GS") == 0)
