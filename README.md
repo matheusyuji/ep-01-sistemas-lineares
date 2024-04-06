@@ -16,8 +16,8 @@ Para executar o script:
 ```bash
 bash ./script.sh arquivo CPU
 ```
-arquivo: arquivo onde está localizado os sistemas lineares.
-CPU: número de CPUs. 
+* arquivo: arquivo onde está localizado os sistemas lineares.
+* CPU: número de CPUs. 
 
 ## Algumas decisões tomadas
 * O sistema linear da entrada do programa é armazenado em uma matriz dos coeficientes = A, vetor do termos independentes = b e a solução do sistema no vetor das incógnitas = x. Quando o programa termina de executar a Eliminação de Gauss clássica e Gauss Seidel clássico, a matriz dos coeficientes é copiada para três vetores d, a e c e são realizadas as operações específicas para matrizes tri-diagonais.
